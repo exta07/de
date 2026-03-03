@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kampanya & Katalog Merkezi</title>
+  <style>
+    :root{
+      --bg:#0b0c0f;
+      --panel:#11141b;
+      --text:#e9eef7;
+      --muted:#a9b3c3;
+      --gold:#C9A24D;
+      --stroke:rgba(201,162,77,.22);
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1000px 600px at 15% 0%, rgba(201,162,77,.14), transparent 55%),
+        radial-gradient(900px 500px at 95% 20%, rgba(201,162,77,.10), transparent 55%),
+        linear-gradient(180deg, #07080b 0%, var(--bg) 100%);
+      color:var(--text);
+      min-height:100vh;
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:28px 16px 60px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:14px 16px; border:1px solid rgba(255,255,255,.06);
+      background: rgba(17,20,27,.65);
+      backdrop-filter: blur(10px);
+      border-radius:16px; box-shadow: var(--shadow);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width:220px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      border:1px solid var(--stroke);
+      background: radial-gradient(circle at 30% 20%, rgba(201,162,77,.35), transparent 55%),
+                  linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      display:grid; place-items:center; color:var(--gold); font-weight:800;
+      letter-spacing:.5px;
+    }
+    .brand h1{font-size:14px; margin:0; line-height:1.1}
+    .brand p{font-size:12px; margin:3px 0 0; color:var(--muted)}
+    .search{
+      flex:1; display:flex; gap:10px; align-items:center;
+    }
+    .search input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      outline:none;
+    }
+    .search input:focus{
+      border-color: rgba(201,162,77,.55);
+      box-shadow: 0 0 0 4px rgba(201,162,77,.12);
+    }
+    .pill{
+      padding:10px 12px; border-radius:999px; border:1px solid var(--stroke);
+      background: rgba(201,162,77,.08);
+      color: var(--gold);
+      font-size:12px; white-space:nowrap;
+      user-select:none;
+    }
+    .hero{margin:22px 0 16px;}
+    .hero h2{margin:0 0 8px; font-size:28px; letter-spacing:.2px}
+    .hero p{margin:0; color:var(--muted)}
+    .filters{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 8px}
+    .btn{
+      cursor:pointer;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(17,20,27,.55);
+      color:var(--text);
+      font-size:12px;
+    }
+    .btn.active{
+      border-color: rgba(201,162,77,.55);
+      background: rgba(201,162,77,.10);
+      color: var(--gold);
+    }
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .card{
+      grid-column: span 4;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(17,20,27,.65);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex; flex-direction:column;
+      min-height:160px;
+    }
+    @media (max-width:900px){ .card{grid-column: span 6;} .brand{min-width:auto} }
+    @media (max-width:560px){ .card{grid-column: span 12;} .pill{display:none} }
+    .card .top{
+      padding:14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .tag{display:inline-block; font-size:11px; color:var(--muted); margin-bottom:6px}
+    .title{margin:0; font-size:15px}
+    .meta{margin:6px 0 0; font-size:12px; color:var(--muted)}
+    .card .actions{
+      margin-top:auto;
+      padding:12px 14px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    a.link{
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      color:var(--text);
+      font-size:12px;
+    }
+    a.link.primary{
+      border-color: rgba(201,162,77,.55);
+      background: rgba(201,162,77,.12);
+      color: var(--gold);
+    }
+    .empty{
+      padding:18px;
+      border:1px dashed rgba(255,255,255,.15);
+      border-radius:18px;
+      color:var(--muted);
+      grid-column: 1 / -1;
+      background: rgba(0,0,0,.18);
+    }
+    .hint{margin-top:10px; font-size:12px; color:var(--muted)}
+    .footer{margin-top:26px; color:var(--muted); font-size:12px}
+    code{color:var(--gold)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">EA</div>
+        <div>
+          <h1>Kampanya & Katalog Merkezi</h1>
+          <p>Ürün adı / kod yaz → katalog veya ürün sayfası gelsin</p>
+        </div>
+      </div>
+
+      <div class="search">
+        <input id="q" type="text" placeholder="Örn: GBH 2-26, DHR242, Knipex, lazer..." autocomplete="off" />
+      </div>
+
+      <div class="pill" id="countPill">0 sonuç</div>
+    </div>
+
+    <div class="hero">
+      <h2>Ürünlerimizi Keşfet</h2>
+      <p>Arama kutusuna ürün adı/kodu yaz. İstersen marka filtresi seç.</p>
+      <div class="filters" id="filters"></div>
+      <div class="hint">İpucu: <code>akü</code>, <code>lazer</code>, <code>makita</code> gibi yazınca da bulur.</div>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="footer">
+      Bu demo tamamen ücretsiz: GitHub Pages ile yayınlayabilirsin. Katalog linklerini ve ürün linklerini data dosyasından değiştirmen yeter.
+    </div>
+  </div>
+
+  <script src="./products.js"></script>
+  <script>
+    const q = document.getElementById("q");
+    const grid = document.getElementById("grid");
+    const filters = document.getElementById("filters");
+    const countPill = document.getElementById("countPill");
+
+    const state = { brand: "Tümü", query: "" };
+
+    function uniqBrands(items){
+      return ["Tümü", ...Array.from(new Set(items.map(x => x.brand))).sort((a,b)=>a.localeCompare(b,'tr'))];
+    }
+
+    function renderFilters(){
+      const brands = uniqBrands(PRODUCTS);
+      filters.innerHTML = "";
+      brands.forEach(b => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (state.brand === b ? " active" : "");
+        btn.textContent = b;
+        btn.onclick = () => { state.brand = b; renderFilters(); render(); };
+        filters.appendChild(btn);
+      });
+    }
+
+    function normalize(s){
+      return (s || "")
+        .toLowerCase()
+        .replaceAll("ı","i")
+        .replaceAll("İ","i")
+        .replaceAll("ş","s")
+        .replaceAll("ğ","g")
+        .replaceAll("ç","c")
+        .replaceAll("ö","o")
+        .replaceAll("ü","u");
+    }
+
+    function matches(item, query){
+      if(!query) return true;
+      const hay = normalize([
+        item.name, item.code, item.brand, item.category, ...(item.tags||[])
+      ].join(" "));
+      const needle = normalize(query.trim());
+      // birden fazla kelimeyi AND mantığıyla ara
+      return needle.split(/\s+/).every(tok => hay.includes(tok));
+    }
+
+    function render(){
+      const query = state.query;
+      let items = PRODUCTS.slice();
+
+      if(state.brand !== "Tümü"){
+        items = items.filter(x => x.brand === state.brand);
+      }
+      items = items.filter(x => matches(x, query));
+
+      countPill.textContent = `${items.length} sonuç`;
+
+      if(items.length === 0){
+        grid.innerHTML = `<div class="empty">
+          Sonuç bulunamadı. Başka bir ürün adı/kodu dene (örn: <code>lazer</code>, <code>akü</code>, <code>knipex</code>).
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(x => `
+        <div class="card">
+          <div class="top">
+            <div class="tag">${x.brand} • ${x.category}</div>
+            <h3 class="title">${x.name}</h3>
+            <div class="meta">${x.code ? `Kod: <b>${x.code}</b> • ` : ""}${(x.tags||[]).slice(0,3).join(" • ")}</div>
+          </div>
+          <div class="actions">
+            ${x.catalog_url ? `<a class="link primary" href="${x.catalog_url}" target="_blank" rel="noopener">Kataloğu Aç</a>` : ""}
+            ${x.product_url ? `<a class="link" href="${x.product_url}" target="_blank" rel="noopener">Ürün Sayfası</a>` : ""}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    q.addEventListener("input", (e) => {
+      state.query = e.target.value;
+      render();
+    });
+
+    renderFilters();
+    render();
+  </script>
+</body>
+</html>
